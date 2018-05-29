@@ -21,7 +21,7 @@ export default class Product extends Component {
       return this.state.products.map((product, index) => {
         return (
           <tr key={product._id}>
-            <td> {index} </td>
+            <td> {index + 1} </td>
             <td> {product.name} </td>
             <td> {product.price }</td>
             <td> {product.gst} %</td>
