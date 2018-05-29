@@ -24,7 +24,7 @@ export default class Product extends Component {
             <td> {index} </td>
             <td> {product.name} </td>
             <td> {product.price }</td>
-            <td> {product.gst} </td>
+            <td> {product.gst} %</td>
             <td> {product.total} </td>
             <td> {(new Date(product.createdAt)).toDateString()} </td>
           </tr>

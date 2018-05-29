@@ -51,11 +51,9 @@ export default class Home extends Component {
     let total = price + (price * gst / 100) 
     let disabled =  !product || (price < 0) || this.state.disabled
     return (
-      <div className='card mx-auto mt-5'>
-        <div className='card-body'>  
-        <h5 className="card-title">Add Product</h5>
-
-        
+      <div className='row'>
+       <div className='add-box col-8 mx-auto mt-5'>
+        <h3 className='p3 add-header'> Add Product </h3>
           <form>
             <div className='form-group'>
               <input type='text' className='form-control' id='product' value={this.state.product} onChange={this.handleChange} placeholder='Product Name' />
@@ -63,8 +61,8 @@ export default class Home extends Component {
             <div className='form-group'>
               <input type='number' className='form-control' id='price' value={this.state.price} onChange={this.handleChange} placeholder='Price' />
             </div>
-            <div className='form-group'>
-              <label htmlFor='gst'> GST Rate</label>
+            <div className='input-group mb-3'>
+              <span className="input-group-text"> GST</span>              
               <select className='form-control' id='gst' onChange={this.handleChange}>
                 <option value="5">5%</option>
                 <option value="12">12%</option>
@@ -72,13 +70,15 @@ export default class Home extends Component {
                 <option value="28">28%</option>
               </select>
             </div>
-            <div className='form-group'>
-              <label htmlFor='total'> Total </label>
+            <div className='input-group mb-3'>
               <input type='number' className='form-control' id='total' value={total}  disabled />
+
+              <span className='input-group-text'> Total</span>
             </div>
           </form>
           <button className='btn btn-primary' onClick={this.add} disabled={disabled}>Add</button>
-        </div>
+        
+      </div>
       </div>
     )
   }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { fetchCount } from '../services/product'
-import {RadialChart, Hint} from 'react-vis'
+import {RadialChart } from 'react-vis'
+
 
 const colors = ['#ff5f5f', '#333366', '#f9e75e', '#92e6e6']
 
@@ -9,7 +10,6 @@ export default class Analysis extends Component {
     super()
     this.state = {
       count: [],
-      value: false
     }
   }
 
@@ -33,12 +33,11 @@ export default class Analysis extends Component {
     })
   }
   render () {
-    const { value } = this.state
 
     const showIndex = () => {
       return this.state.count.map(slab => {
         let spanStyle = {color: slab.color, fontWeight: 700}
-        return (<span className='p-4' key={slab.angle} style={spanStyle}> {slab.name}%  </span>)
+        return (<span className='p-4' key={slab.name} style={spanStyle}> {slab.name}%  </span>)
       })
     }
 
@@ -49,8 +48,6 @@ export default class Analysis extends Component {
           data={this.state.count}
           width={300}
           height={300}
-          onValueMouseOver={v => this.setState({value: v})}
-          onSeriesMouseOut={v => this.setState({value: false})}
           showLabels
           colorType='literal'
         />

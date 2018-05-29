@@ -7,10 +7,7 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem } from 'reactstrap'
+} from 'reactstrap'
 
 // components
 import Home from './components/home'
