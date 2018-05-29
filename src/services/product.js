@@ -10,3 +10,8 @@ export const fetchProducts = () => {
   return axios.get(`${url}/products`)
     .then(data => data.data.products)
 }
+
+export const fetchCount = () => {
+  return axios.get(`${url}/count`)
+    .then(data => data.data.count)
+}
