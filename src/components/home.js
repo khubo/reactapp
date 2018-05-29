@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { addProduct } from '../services/product'
+import { calculateTotal } from '../services/gst'
 
 export default class Home extends Component {
   constructor () {
@@ -39,16 +40,22 @@ export default class Home extends Component {
     })
   }
 
+  updateTotal =  (changed) => {
+   
+    calculateTotal(this.state.price, this.state.gst).then(total => {
+      this.setState({
+        total
+      })
+    })
+
+  }
+
   handleChange = (event) => {
     this.setState({[event.target.id] : event.target.value})
   }
 
   render () {
-
-    let {price, gst, product } = this.state
-    price = Number(price)
-    gst = Number(gst)
-    let total = price + (price * gst / 100) 
+    let { product, price } = this.state
     let disabled =  !product || (price < 0) || this.state.disabled
     return (
       <div className='row'>
@@ -59,11 +66,11 @@ export default class Home extends Component {
               <input type='text' className='form-control' id='product' value={this.state.product} onChange={this.handleChange} placeholder='Product Name' />
             </div>
             <div className='form-group'>
-              <input type='number' className='form-control' id='price' value={this.state.price} onChange={this.handleChange} placeholder='Price' />
+              <input type='number' className='form-control' id='price' value={this.state.price} onChange={this.handleChange} onBlur={this.updateTotal} placeholder='Price' />
             </div>
             <div className='input-group mb-3'>
               <span className="input-group-text"> GST</span>              
-              <select className='form-control' id='gst' onChange={this.handleChange}>
+              <select className='form-control' id='gst' onChange={this.handleChange} onBlur={this.updateTotal}>
                 <option value="5">5%</option>
                 <option value="12">12%</option>
                 <option value="18">18%</option>
@@ -71,7 +78,7 @@ export default class Home extends Component {
               </select>
             </div>
             <div className='input-group mb-3'>
-              <input type='number' className='form-control' id='total' value={total}  disabled />
+              <input type='number' className='form-control' id='total' value={this.state.total} disabled />
 
               <span className='input-group-text'> Total</span>
             </div>
