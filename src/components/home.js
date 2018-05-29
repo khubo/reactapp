@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import { addProduct } from '../services/product'
 import { calculateTotal } from '../services/gst'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+
 
 export default class Home extends Component {
   constructor () {
@@ -11,8 +13,23 @@ export default class Home extends Component {
       gst: 5,
       total: 0,
       disabled: false,
-      error: ''
+      error: '',
+      modal: false,
+      message: ''
     }
+  }
+
+  toggle = (success=true) => {
+    let message = success 
+      ? 'Successfully Added'
+      : 'Failed Adding'
+      console.log('modal state is', this.state.modal)
+    this.setState({
+      message,
+      modal: !this.state.modal,
+    }, () => {
+      console.log('value now is', this.state.modal)
+    })
   }
 
   clearInputs = () => {
@@ -20,6 +37,7 @@ export default class Home extends Component {
       disabled: false,
       product: '',
       price: 0,
+      total: 0
     })
   }
 
@@ -33,10 +51,12 @@ export default class Home extends Component {
 
     addProduct(product).then(res => {
       this.clearInputs()
+      this.toggle(true)
     })
     .catch(e => {
       console.log('error adding product', e.message)
       this.clearInputs()
+      this.toggle(false)
     })
   }
 
@@ -57,6 +77,22 @@ export default class Home extends Component {
   render () {
     let { product, price } = this.state
     let disabled =  !product || (price < 0) || this.state.disabled
+
+    const modal = () => {
+      return (
+        <div>
+          <Button color="danger" onClick={this.toggle}>{this.props.buttonLabel}</Button>
+          <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+            <ModalBody>
+              {this.state.message}
+            </ModalBody>
+            <ModalFooter>
+              <Button className="mx-auto" color="secondary" onClick={this.toggle}>Ok</Button>
+            </ModalFooter>
+          </Modal>
+        </div>
+      );
+    }
     return (
       <div className='row'>
        <div className='add-box col-8 mx-auto mt-5'>
@@ -86,6 +122,7 @@ export default class Home extends Component {
           <button className='btn btn-primary' onClick={this.add} disabled={disabled}>Add</button>
         
       </div>
+      {modal()}
       </div>
     )
   }
