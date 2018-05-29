@@ -23,12 +23,9 @@ export default class Home extends Component {
     let message = success 
       ? 'Successfully Added'
       : 'Failed Adding'
-      console.log('modal state is', this.state.modal)
     this.setState({
       message,
       modal: !this.state.modal,
-    }, () => {
-      console.log('value now is', this.state.modal)
     })
   }
 
